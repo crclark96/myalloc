@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -march=native -Wall -Wshadow
+CFLAGS = -march=native -Wall -Wshadow -g
 SRC = $(wildcard *.c)
 OBJS = $(SRC:.c=.o)
 

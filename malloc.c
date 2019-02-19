@@ -76,6 +76,10 @@ struct block_meta *find_free_block(struct block_meta **last, size_t size){
     *last = current;
     current = current->next;
   }
+  if ( !current ) {
+    // no free block found
+    current = request_space(*last, size);
+  }
   return current;
 }
 
