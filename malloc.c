@@ -1,5 +1,7 @@
 #include "malloc.h"
 
+void *global_base = NULL;
+
 void *malloc(size_t size){
   struct block_meta *block; // TODO: align size?
 

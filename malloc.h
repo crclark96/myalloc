@@ -17,7 +17,6 @@ void free(void *ptr);
 struct block_meta *request_space(struct block_meta *last, size_t size);
 struct block_meta *find_free_block(struct block_meta **last, size_t size);
 struct block_meta *get_block_ptr(void *ptr);
-void *global_base = NULL;
 
 void print_block(struct block_meta *ptr, int first, int last);
 void show_heap();
