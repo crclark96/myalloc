@@ -65,7 +65,7 @@ void free(void *ptr){
   // TODO: consider merging blocks once splitting blocks is implemented
   struct block_meta* block_ptr = get_block_ptr(ptr);
   assert(block_ptr->free == 0);
-  assert(block_ptr->magic == 0x7777777 || block_ptr->magic == 0x12345678);
+  assert(block_ptr->magic == 0x77777777 || block_ptr->magic == 0x12345678);
   block_ptr->free = 1;
   block_ptr->magic = 0x55555555;
 }
@@ -107,4 +107,52 @@ struct block_meta *get_block_ptr(void *ptr){
   return (struct block_meta*)ptr - 1;
 }
 
-int main() {return 0;}
+void print_block(struct block_meta *block, int first, int last) {
+  uint8_t *ptr = (uint8_t*)(block + 1);
+  int i,j,flag = 0;
+  printf("*-------------------------------------------------*   |\n");
+  printf("| addr  -> %011p                            | <-+\n", block);
+  printf("| size  -> %#011x                            |\n",
+          (unsigned int)block->size);
+  printf("| free  -> %#011x                            |\n",
+          (unsigned int)block->free);
+  printf("| magic -> %#011x                            |\n",
+          (unsigned int)block->magic);
+  printf("| next  -> %011p                            | --+\n", block->next);
+  printf("*-------------------------------------------------*   |\n");
+  printf("| contents:                                       |   |\n");
+  printf("|  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |   |\n| ");
+  // print contents
+  for ( i=0; i < block->size; i += 0x10 ) {
+    for ( j=0; j < 0x10; j++ ) {
+      if ( (i+j) >= block->size ) {
+        // don't overreach into further memory segments
+        flag = 1;
+        break;
+      }
+      printf("%02x ", ptr[i+j]);
+    }
+    if ( flag ) {
+      // pad out with spaces for incomplete lines
+      for ( j=0; j < ( 0x10 - (block->size % 0x10) ); j++ ) {
+        printf("   ");
+      }
+    }
+    printf("|   |\n| ");
+  }
+  printf("                                                |   |\n");
+  printf("*-------------------------------------------------*   |\n");
+}
+
+void show_heap() {
+  struct block_meta *current;
+  int first, last;
+  for ( current = (struct block_meta*) global_base;
+      current;
+      current = current->next ) {
+    first = (current == global_base);
+    last = current->next == NULL ? 0 : 1;
+    print_block(current, first, last);
+  }
+}
+

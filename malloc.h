@@ -7,6 +7,8 @@
 #include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdint.h>
+#include <stdio.h>
 
 void *malloc(size_t size);
 void *realloc(void *ptr, size_t size);
@@ -16,6 +18,9 @@ struct block_meta *request_space(struct block_meta *last, size_t size);
 struct block_meta *find_free_block(struct block_meta **last, size_t size);
 struct block_meta *get_block_ptr(void *ptr);
 void *global_base = NULL;
+
+void print_block(struct block_meta *ptr, int first, int last);
+void show_heap();
 
 #define META_SIZE sizeof(struct block_meta)
 

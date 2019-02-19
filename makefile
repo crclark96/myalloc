@@ -2,14 +2,15 @@ CC = gcc
 CFLAGS = -march=native -Wall -Wshadow -g
 SRC = $(wildcard *.c)
 OBJS = $(SRC:.c=.o)
+TARGETS = malloc.so demo
 
-all: malloc malloc.so
+all: $(TARGETS)
 
-malloc.so: $(SRC)
+malloc.so: malloc.o
 	$(CC) $(CFLAGS) -fPIC -o $@ $^
 
-malloc: $(SRC)
+demo: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
-	rm -f $(OBJS) malloc.so malloc
+	rm -f $(OBJS) $(TARGETS)
