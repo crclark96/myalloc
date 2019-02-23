@@ -113,14 +113,16 @@ void print_block(struct block_meta *block, int first, int last) {
   uint8_t *ptr = (uint8_t*)(block + 1);
   int i,j,flag = 0;
   printf("*-------------------------------------------------*   |\n");
-  printf("| addr  -> %011p                            | <-+\n", block);
-  printf("| size  -> %#011x                            |\n",
+  printf("| addr  -> %014p                         | <-+\n",
+          block);
+  printf("| size  ->     %#010x                         |\n",
           (unsigned int)block->size);
-  printf("| free  -> %#011x                            |\n",
+  printf("| free  ->              %1x                         |\n",
           (unsigned int)block->free);
-  printf("| magic -> %#011x                            |\n",
+  printf("| magic ->     %#010x                         |\n",
           (unsigned int)block->magic);
-  printf("| next  -> %011p                            | --+\n", block->next);
+  printf("| next  -> %014p                         | --+\n",
+          block->next);
   printf("*-------------------------------------------------*   |\n");
   printf("| contents:                                       |   |\n");
   printf("|  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |   |\n| ");
