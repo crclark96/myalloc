@@ -6,8 +6,8 @@ TARGETS = malloc.so demo
 
 all: $(TARGETS)
 
-malloc.so: malloc.o
-	$(CC) $(CFLAGS) -fPIC -o $@ $^
+malloc.so: malloc.c
+	$(CC) $(CFLAGS) -c -fPIC -o $@ $^
 
 demo: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
