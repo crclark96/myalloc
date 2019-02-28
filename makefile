@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -march=native -Wall -Wshadow -g
+CFLAGS = -march=native -Wall -Wshadow -g -O0
 SRC = $(wildcard *.c)
 OBJS = $(SRC:.c=.o)
 TARGETS = malloc.so demo

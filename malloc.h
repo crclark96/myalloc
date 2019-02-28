@@ -22,6 +22,8 @@ void print_block(struct block_meta *ptr, int first, int last);
 void show_heap();
 
 #define META_SIZE sizeof(struct block_meta)
+#define min(X, Y) ((X) < (Y) ? (X) : (Y))
+#define max(X, Y) ((X) > (Y) ? (X) : (Y))
 
 struct block_meta{
   size_t size;

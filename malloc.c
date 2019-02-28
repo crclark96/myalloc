@@ -112,6 +112,11 @@ struct block_meta *get_block_ptr(void *ptr){
 void print_block(struct block_meta *block, int first, int last) {
   uint8_t *ptr = (uint8_t*)(block + 1);
   int i,j,flag = 0;
+  if ( first ) {
+    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+    printf("\n");
+    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+  }
   printf("*-------------------------------------------------*   |\n");
   printf("| addr  -> %014p                         | <-+\n",
           block);
@@ -127,9 +132,9 @@ void print_block(struct block_meta *block, int first, int last) {
   printf("| contents:                                       |   |\n");
   printf("|  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |   |\n| ");
   // print contents
-  for ( i=0; i < block->size; i += 0x10 ) {
+  for ( i=0; i < min(block->size, 0x50); i += 0x10 ) {
     for ( j=0; j < 0x10; j++ ) {
-      if ( (i+j) >= block->size ) {
+      if ( (i+j) >= min(block->size, 0x50)) {
         // don't overreach into further memory segments
         flag = 1;
         break;
