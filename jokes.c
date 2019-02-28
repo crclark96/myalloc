@@ -33,4 +33,6 @@ void *oc(size_t size) {
     printf("\n");
   }
 
+  return malloc(size);
+
 }
