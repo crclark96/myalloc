@@ -17,7 +17,7 @@ void *malloc(size_t size){
     global_base = block;
   } else {
     struct block_meta *last = global_base;
-    block = find_free_block(&last, size);
+    block = find_free_block(last, size);
     if (!block) {
       return NULL;
     } else { // found free block
@@ -72,15 +72,15 @@ void free(void *ptr){
   block_ptr->magic = 0x55555555;
 }
 
-struct block_meta *find_free_block(struct block_meta **last, size_t size){
+struct block_meta *find_free_block(struct block_meta *last, size_t size){
   struct block_meta *current = global_base;
   while (current && !(current->free && current->size >= size)){
-    *last = current;
+    last = current;
     current = current->next;
   }
   if ( !current ) {
     // no free block found
-    current = request_space(*last, size);
+    current = request_space(last, size);
   }
   return current;
 }

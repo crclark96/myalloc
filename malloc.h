@@ -15,7 +15,7 @@ void *realloc(void *ptr, size_t size);
 void *calloc(size_t nelem, size_t elsize);
 void free(void *ptr);
 struct block_meta *request_space(struct block_meta *last, size_t size);
-struct block_meta *find_free_block(struct block_meta **last, size_t size);
+struct block_meta *find_free_block(struct block_meta *last, size_t size);
 struct block_meta *get_block_ptr(void *ptr);
 
 void print_block(struct block_meta *ptr, int first, int last);
